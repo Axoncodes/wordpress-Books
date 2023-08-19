@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="-lICfcMq23BuJoMhSjsL" name="steps">
-        <mxGraphModel dx="3973" dy="524" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+        <mxGraphModel dx="5016" dy="989" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -30,9 +30,6 @@
                 <mxCell id="3" value="&quot;Books&quot; post type =&amp;gt; Title, Author, Publication Year&lt;br&gt;+ Categories =&amp;gt; hierarchical taxonomy" style="whiteSpace=wrap;html=1;strokeWidth=2;fontColor=#FFFFFF;" parent="1" vertex="1">
                     <mxGeometry x="-10" y="220" width="380" height="140" as="geometry"/>
                 </mxCell>
-                <mxCell id="8" value="" style="edgeStyle=none;html=1;fontColor=#FFFFFF;" parent="1" source="5" target="7" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
                 <mxCell id="75" style="edgeStyle=none;html=1;fontColor=#FFFFFF;" parent="1" source="5" target="74" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
@@ -46,21 +43,6 @@
                 </mxCell>
                 <mxCell id="5" value="[book_display] =&amp;gt; display the books by category(filter bar via AJAX)&lt;br&gt;attr(categories) =&amp;gt; comma-separated list of categories to display" style="whiteSpace=wrap;html=1;strokeWidth=2;fontColor=#FFFFFF;" parent="1" vertex="1">
                     <mxGeometry x="-10" y="440" width="380" height="140" as="geometry"/>
-                </mxCell>
-                <mxCell id="33" style="edgeStyle=none;html=1;fontColor=#FFFFFF;" parent="1" source="7" target="32" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
-                <mxCell id="7" value="data validation" style="whiteSpace=wrap;html=1;strokeWidth=2;fontColor=#FFFFFF;" parent="1" vertex="1">
-                    <mxGeometry x="-10" y="670" width="380" height="120" as="geometry"/>
-                </mxCell>
-                <mxCell id="35" style="edgeStyle=none;html=1;fontColor=#FFFFFF;" parent="1" source="32" target="34" edge="1">
-                    <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
-                <mxCell id="32" value="escaping" style="whiteSpace=wrap;html=1;strokeWidth=2;labelBackgroundColor=none;fontColor=#FFFFFF;" parent="1" vertex="1">
-                    <mxGeometry x="-10" y="920" width="380" height="120" as="geometry"/>
-                </mxCell>
-                <mxCell id="34" value="sanitization" style="whiteSpace=wrap;html=1;strokeWidth=2;labelBackgroundColor=none;fontColor=#FFFFFF;" parent="1" vertex="1">
-                    <mxGeometry x="-10" y="1150" width="380" height="120" as="geometry"/>
                 </mxCell>
                 <mxCell id="63" style="edgeStyle=none;html=1;fontColor=#FFFFFF;" parent="1" source="60" target="62" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
