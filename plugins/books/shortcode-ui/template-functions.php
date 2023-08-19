@@ -8,7 +8,7 @@ function de_book_block(
     $excerpt_context,
     $author_name,
     $author_link,
-    $link,
+    $link
     ) {
     $thumbnail_block = '';
     if (isset($thumbnail_url)) {
