@@ -1,6 +1,9 @@
 <?php
 add_shortcode('book_display', 'book_display_shortcode');
 function book_display_shortcode($atts) {
+    ob_start();
+    require_once plugin_dir_path(__FILE__) . '../shortcode-ui/template-functions.php';
+
     // Parse shortcode attributes
     $atts = shortcode_atts(array('categories' => null,), $atts);
     $req_categories = $atts['categories'];
@@ -38,15 +41,61 @@ function book_display_shortcode($atts) {
     $books_query = new WP_Query($args);
 
     // Output books
-    $output = '<ul>';
+    echo '<section style="
+        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        row-gap: 10px;
+        column-gap: 10px;
+    ">';
     while ($books_query->have_posts()) {
         $books_query->the_post();
-        $output .= '<li>' . esc_html(get_the_title()) . ' by ' . esc_html(get_post_meta(get_the_ID(), 'author', true)) . '</li>';
+
+        // Get and sanitize title
+        $title = get_the_title();
+        $sanitized_title = sanitize_text_field($title);
+
+        // Get and sanitize thumbnail URL
+        $thumbnail_url = get_the_post_thumbnail_url();
+        $sanitized_thumbnail_url = esc_url($thumbnail_url);
+
+        // Get and sanitize category
+        $categories = get_the_terms(get_the_ID(), 'book-category');
+        $category = !empty($categories) ? esc_html($categories[0]->name) : '';
+
+        // Get and sanitize publish year or update year
+        $publish_year = get_the_date('Y');
+        $sanitized_publish_year = intval($publish_year);
+
+        // Get and sanitize excerpt
+        $excerpt = get_the_excerpt();
+        $sanitized_excerpt = esc_html($excerpt);
+
+        // Get and sanitize author name
+        $author_name = get_the_author_meta('display_name');
+        $sanitized_author_name = esc_html($author_name);
+
+        // Get post permalink
+        $post_permalink = get_permalink();
+        
+        echo de_book_block(
+            $sanitized_title,
+            $sanitized_thumbnail_url,
+            $category,
+            $sanitized_publish_year,
+            $sanitized_excerpt,
+            $sanitized_author_name,
+            $post_permalink,
+        );
     }
-    $output .= '</ul>';
+    echo '</section>';
 
     // Reset post data
     wp_reset_postdata();
 
+    $output = ob_get_clean();
     return $output;
 }
