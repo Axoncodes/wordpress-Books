@@ -65,10 +65,10 @@ function book_display_shortcode($atts) {
         // Get and sanitize category
         $categories = get_the_terms(get_the_ID(), 'book-category');
         $category = !empty($categories) ? esc_html($categories[0]->name) : '';
+        $category_link = esc_url(get_term_link($categories[0]));
 
         // Get and sanitize publish year or update year
-        $publish_year = get_the_date('Y');
-        $sanitized_publish_year = intval($publish_year);
+        $publish_year = get_post_meta(get_the_ID(), 'publication_year', true);
 
         // Get and sanitize excerpt
         $excerpt = get_the_excerpt();
@@ -77,6 +77,7 @@ function book_display_shortcode($atts) {
         // Get and sanitize author name
         $author_name = get_the_author_meta('display_name');
         $sanitized_author_name = esc_html($author_name);
+        $author_link = esc_url(get_author_posts_url(get_the_author_meta('ID')));
 
         // Get post permalink
         $post_permalink = get_permalink();
@@ -85,9 +86,11 @@ function book_display_shortcode($atts) {
             $sanitized_title,
             $sanitized_thumbnail_url,
             $category,
-            $sanitized_publish_year,
+            $category_link,
+            $publish_year,
             $sanitized_excerpt,
             $sanitized_author_name,
+            $author_link,
             $post_permalink,
         );
     }
