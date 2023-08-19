@@ -17,11 +17,8 @@ function add_publication_year_field() {
 function publication_year_field_callback($post) {
     $publication_year = get_post_meta($post->ID, 'publication_year', true);
     $auto_fill = get_post_meta($post->ID, 'publication_year_auto_fill', true);
-    if ($auto_fill === '' || $auto_fill === '1') { // Check if empty or set to '1'
-        $auto_fill_checked = 'checked';
-    } else {
-        $auto_fill_checked = '';
-    }
+    if ($auto_fill === '' || $auto_fill === '1') $auto_fill_checked = 'checked';
+    else $auto_fill_checked = '';
     ?>
     <label for="publication_year">Publication Year:</label>
     <input type="text" id="publication_year" name="publication_year" value="<?php echo esc_attr($publication_year); ?>" <?php if ($auto_fill) echo 'readonly'; ?>>
