@@ -1,4 +1,3 @@
-<!-- template-functions.php -->
 <?php
 function de_book_block(
     $title,
