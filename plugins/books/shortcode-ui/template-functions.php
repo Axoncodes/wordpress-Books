@@ -45,9 +45,10 @@ function tag_book_block($text='', $link=null) {
     return $content;
 }
 
-function books_filterbar($categories) {
+function books_filterbar($categories, $req_category) {
     $options = '';
-    foreach ($categories as $category) $options .= books_filterbar_option($category);
+    foreach ($categories as $category)
+        $options .= books_filterbar_option($category, $req_category == $category->slug);
 
     return "<div class='books-filter'>
         <label for='category-filter'>Filter by Category:</label>
@@ -58,8 +59,9 @@ function books_filterbar($categories) {
     </div>";
 }
 
-function books_filterbar_option($category) {
+function books_filterbar_option($category, $selected) {
     $slug = esc_attr($category->slug);
     $name = esc_html($category->name);
-    return "<option value='$slug'>$name</option>";
+    $selected = $selected ? "selected='$selected'" : "";
+    return "<option value='$slug' $selected>$name</option>";
 }

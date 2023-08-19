@@ -21,7 +21,7 @@ function book_display_shortcode($atts) {
     $filterbar = books_filterbar(get_terms(array(
         'taxonomy' => 'book-category',
         'hide_empty' => false,
-    )));
+    )), $req_categories);
 
     return "<div class='books-shortcode-container'>
         $filterbar
@@ -47,7 +47,7 @@ function books_shortcode_body($req_categories, $unique_instance_identifier, $boo
     // Query arguments for books
     $args = array(
         'post_type' => $post_type,
-        'posts_per_page' => 10,
+        'posts_per_page' => -1,
         'paged' => $booked,
         'tax_query' => array(),
     );
@@ -151,6 +151,7 @@ function load_books_ajax() {
     $categories = strlen($categories) > 0 ? $categories : null;
 
     echo books_shortcode_body($categories, $unique_instance_identifier);
+
     die();
 }
 add_action('wp_ajax_load_books', 'load_books_ajax');
