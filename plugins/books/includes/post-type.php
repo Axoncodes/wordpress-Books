@@ -1,4 +1,5 @@
 <?php
+// Registering th custom BOOKS post type
 add_action('init', 'books_custom_post_type_registration');
 function books_custom_post_type_registration() {
     $plural_name = 'Books';
@@ -36,7 +37,7 @@ function books_custom_post_type_registration() {
 	register_post_type($slug, $args);
 }
 
-
+// Registering the Category Taxonomy for the Books custom post type
 add_action( 'init', 'books_category_taxonomy_registration' );
 function books_category_taxonomy_registration() {
     $plural_name = 'Categories';
@@ -71,3 +72,5 @@ function books_category_taxonomy_registration() {
 
     register_taxonomy( $slug, [ 'books' ], $args );
 }
+
+require_once plugin_dir_path(__FILE__) . './publication-year-field.php';
