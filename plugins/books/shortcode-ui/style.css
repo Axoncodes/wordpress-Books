@@ -1,0 +1,108 @@
+.de-book-block {
+    position: relative;
+    width: 20%;
+}
+
+.de-book-block * {
+    text-decoration: none;
+}
+
+.de-book-block:hover .thumbnail-cover {
+    background-image: linear-gradient(0deg, #000000ba, #00000066, #0001, #0002);
+}
+
+.de-book-block .thumbnail-cover {
+    display: flex;
+    background-image: linear-gradient(0deg, #000000ba, #00000016, #0001, #0002);
+    border-radius: 17px;
+    overflow: hidden;
+}
+
+.de-book-block .thumbnail-cover img {
+    width: 100%;
+    height: auto;
+    z-index: -1;
+    position: relative;
+}
+
+.de-book-block p {
+    color: black;
+    font-size: 15px;
+    font-family: Inter;
+    font-weight: 400;
+    word-wrap: break-word;
+}
+
+.de-book-block h2 {
+    color: white;
+    font-size: 20px;
+    font-family: Inter;
+    font-weight: 600;
+    position:absolute;
+    padding-left: 7%;
+    padding-bottom: 5%;
+    bottom: 0;
+    margin: 0;
+    transition: all .3s;
+}
+
+.de-book-block:hover h2 {
+    font-size: 40px;
+}
+
+.de-book-block a {
+    position: relative;
+    display: inline-flex;
+}
+
+.de-book-block nav {
+    column-gap: 6px;
+    padding-left: 7%;
+    padding-top: 5%;
+    display: flex;
+    flex-wrap: nowrap;
+    position: absolute;
+    top: 0;
+    height: min-content;
+}
+
+.de-book-block .tag {
+    position: relative;
+    background: #CDEDFF;
+    padding: 4px 15px;
+    border-radius: 20em;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    /* height: min-content; */
+}
+
+.de-book-block .tag span {
+    color: #003C5E;
+    font-size: 13px;
+    font-family: Inter;
+    font-weight: 400;
+    word-wrap: break-word;
+}
+
+@media (max-width: 1200px) {
+    .de-book-block {width: 32%}
+}
+
+@media (max-width: 768px) {
+    .de-book-block {width: 50%}
+}
+
+@media (max-width: 480px) {
+    .de-book-block {width: 100%}
+
+    .de-book-block h2 {
+        color: #263238;
+        position: relative;
+    }
+
+    .de-book-block nav {
+        position: relative;
+    }
+}
