@@ -1,12 +1,39 @@
 <?php
+require_once plugin_dir_path(__FILE__) . '../shortcode-ui/index.php';
+require_once plugin_dir_path(__FILE__) . '../shortcode-ui/template-functions.php';
+
 add_shortcode('book_display', 'book_display_shortcode');
 function book_display_shortcode($atts) {
-    ob_start();
-    require_once plugin_dir_path(__FILE__) . '../shortcode-ui/template-functions.php';
+    global $books_shortcode_instance;
 
     // Parse shortcode attributes
     $atts = shortcode_atts(array('categories' => null,), $atts);
     $req_categories = $atts['categories'];
+
+    // Use the counter as the instance identifier
+    $unique_instance_identifier = 'books-instance-' . $books_shortcode_instance;
+    $unique_instance_identifier = esc_attr($unique_instance_identifier);
+
+    // Increment the counter for the next instance
+    $books_shortcode_instance++;
+
+    // Display the Filterbar
+    $filterbar = books_filterbar(get_terms(array(
+        'taxonomy' => 'book-category',
+        'hide_empty' => false,
+    )));
+
+    return "<div class='books-shortcode-container'>
+        $filterbar
+        <div class='books-container' data-instance='$unique_instance_identifier'></div>
+    </div>";
+}
+
+function books_shortcode_body($req_categories, $unique_instance_identifier, $booked=0) {
+    ob_start();
+
+    // Use wp_nonce_url to generate a nonce URL for security
+    $ajax_url = wp_nonce_url(admin_url("admin-ajax.php?action=load_books&instance=$unique_instance_identifier&category=$req_categories"), 'load_books_nonce');
 
     // Validate and sanitize post type and taxonomy names
     $post_type = 'books';
@@ -21,6 +48,7 @@ function book_display_shortcode($atts) {
     $args = array(
         'post_type' => $post_type,
         'posts_per_page' => 10,
+        'paged' => $booked,
         'tax_query' => array(),
     );
 
@@ -37,11 +65,9 @@ function book_display_shortcode($atts) {
         );
     }
 
-    // Query books
     $books_query = new WP_Query($args);
 
-    // Output books
-    echo '<section style="
+    echo "<section style='
         position: relative;
         display: flex;
         flex-wrap: wrap;
@@ -50,8 +76,9 @@ function book_display_shortcode($atts) {
         align-content: center;
         row-gap: 10px;
         column-gap: 10px;
-    ">';
+    '>";
     if ($books_query->have_posts()) {
+        // Books List
         while ($books_query->have_posts()) {
             $books_query->the_post();
 
@@ -99,10 +126,32 @@ function book_display_shortcode($atts) {
         echo "<p>No Books Found</p>";
     }
     echo '</section>';
-
     // Reset post data
     wp_reset_postdata();
 
+    // Rest of the shortcode content
     $output = ob_get_clean();
     return $output;
 }
+
+function load_books_ajax() {
+    // Use the counter as the instance identifier
+    global $books_shortcode_instance;
+
+    $unique_instance_identifier = 'books-instance-' . $books_shortcode_instance;
+    $unique_instance_identifier = esc_attr($unique_instance_identifier);
+
+    // Increment the counter for the next instance
+    $books_shortcode_instance++;
+
+    // The Requested Category
+    // validate
+    $categories = isset($_GET['category']) ? $_GET['category'] : null;
+    // check length
+    $categories = strlen($categories) > 0 ? $categories : null;
+
+    echo books_shortcode_body($categories, $unique_instance_identifier);
+    die();
+}
+add_action('wp_ajax_load_books', 'load_books_ajax');
+add_action('wp_ajax_nopriv_load_books', 'load_books_ajax');

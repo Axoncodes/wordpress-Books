@@ -9,7 +9,7 @@ function de_book_block(
     $author_name,
     $author_link,
     $link,
-) {
+    ) {
     $thumbnail_block = '';
     if (isset($thumbnail_url)) {
         $thumbnail_block = "<div class='thumbnail-cover'>
@@ -43,4 +43,23 @@ function tag_book_block($text='', $link=null) {
     if (isset($link)) $thelink = "href='$link'";
     $content = "<a $thelink class='tag'>$text</a>";
     return $content;
+}
+
+function books_filterbar($categories) {
+    $options = '';
+    foreach ($categories as $category) $options .= books_filterbar_option($category);
+
+    return "<div class='books-filter'>
+        <label for='category-filter'>Filter by Category:</label>
+        <select class='category-filter'>
+            <option value=''>All Categories</option>
+            $options
+        </select>
+    </div>";
+}
+
+function books_filterbar_option($category) {
+    $slug = esc_attr($category->slug);
+    $name = esc_html($category->name);
+    return "<option value='$slug'>$name</option>";
 }

@@ -6,8 +6,10 @@
 * Author: Alireza Ataei
 * Author URI: https://ceo.axoncodes.com
 */
+// Initialize a global counter variable
+global $books_shortcode_instance;
+$books_shortcode_instance = 1; // Start from 1
 
 require_once plugin_dir_path(__FILE__) . 'includes/post-type.php';
 require_once plugin_dir_path(__FILE__) . 'includes/shortcode.php';
-require_once plugin_dir_path(__FILE__) . 'shortcode-ui/index.php';
 
